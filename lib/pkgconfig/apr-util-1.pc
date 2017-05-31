@@ -1,0 +1,13 @@
+prefix=/opt/cws-worker-2.4.25
+exec_prefix=/opt/cws-worker-2.4.25
+libdir=${prefix}/lib
+APRUTIL_MAJOR_VERSION=1
+includedir=/opt/cws-worker-2.4.25/include
+
+Name: APR Utils
+Description: Companion library for APR
+Version: 1.5.4
+# assume that apr-util requires libapr of same major version
+Requires: apr-1
+Libs: -L${libdir} -laprutil-${APRUTIL_MAJOR_VERSION}  /tmp/httpd-2.4.25/srclib/apr-util/xml/expat/libexpat.la
+Cflags: -I${includedir}

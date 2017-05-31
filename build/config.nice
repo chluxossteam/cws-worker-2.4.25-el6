@@ -1,0 +1,35 @@
+#! /bin/sh
+#
+# Created by configure
+
+"./configure" \
+"--prefix=/opt/cws-worker-2.4.25" \
+"--sbindir=/opt/cws-worker-2.4.25/sbin" \
+"--bindir=/opt/cws-worker-2.4.25/bin" \
+"--enable-static-support" \
+"--enable-static-htpasswd" \
+"--enable-static-htdigest" \
+"--enable-static-rotatelogs" \
+"--enable-static-logresolve" \
+"--enable-static-htdhm" \
+"--enable-static-ab" \
+"--enable-static-checkgid" \
+"--enable-static-htcacheclean" \
+"--enable-static-httxt2dbm" \
+"--enable-dav" \
+"--enable-info" \
+"--enable-suexec" \
+"--enable-cgi" \
+"--enable-dav-fs" \
+"--enable-dav-lock" \
+"--enable-imagemap" \
+"--enable-speling" \
+"--enable-rewrite" \
+"--enable-so" \
+"--enable-deflate" \
+"--enable-vhost-alias" \
+"--enable-modules=all" \
+"--enable-shared-modules=all" \
+"--with-mpm=worker" \
+"--with-pcre=/opt/cws-worker-2.4.25/pcre" \
+"$@"

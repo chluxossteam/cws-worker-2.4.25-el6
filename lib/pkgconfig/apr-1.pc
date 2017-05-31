@@ -1,0 +1,11 @@
+prefix=/opt/cws-worker-2.4.25
+exec_prefix=/opt/cws-worker-2.4.25
+libdir=${prefix}/lib
+APR_MAJOR_VERSION=1
+includedir=/opt/cws-worker-2.4.25/include
+
+Name: APR
+Description: The Apache Portable Runtime library
+Version: 1.5.2
+Libs: -L${libdir} -lapr-${APR_MAJOR_VERSION} -lrt -lcrypt  -lpthread
+Cflags: -DLINUX -D_REENTRANT -D_GNU_SOURCE -g -O2 -pthread -I${includedir}
