@@ -36,7 +36,8 @@
 # one is reported.  Run "apachectl help" for usage info
 #
 ACMD="$1"
-ARGV="$@"
+ARGV="$@" 
+source /etc/rc.d/init.d/functions
 #
 # |||||||||||||||||||| START CONFIGURATION SECTION  ||||||||||||||||||||
 # --------------------                              --------------------
@@ -46,7 +47,7 @@ HTTPD='/opt/cws-worker-2.4.25/sbin/httpd'
 #
 # pick up any necessary environment variables
 if test -f /opt/cws-worker-2.4.25/sbin/envvars; then
-  . /opt/cws-worker-2.4.25/sbin/envvars
+  source /opt/cws-worker-2.4.25/sbin/envvars
 fi
 #
 # a command that outputs a formatted text version of the HTML at the
