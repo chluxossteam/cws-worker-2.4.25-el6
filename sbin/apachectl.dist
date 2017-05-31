@@ -36,7 +36,8 @@
 # one is reported.  Run "apachectl help" for usage info
 #
 ACMD="$1"
-ARGV="$@"
+ARGV="$@" 
+source /etc/rc.d/init.d/functions
 #
 # |||||||||||||||||||| START CONFIGURATION SECTION  ||||||||||||||||||||
 # --------------------                              --------------------
