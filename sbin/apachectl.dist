@@ -105,8 +105,10 @@ restart|gracegul)
       testconfig
     fi
     ;;
-start|stop|graceful-stop)
-    $HTTPD $OPTIONS -k $ARGV
+start|stop|graceful-stop) 
+	echo -n "$ARGV httpd:"
+    daemon $HTTPD $OPTIONS -k $ARGV 
+	echo
     ERROR=$?
     ;;
 startssl|sslstart|start-SSL)
