@@ -107,6 +107,7 @@ rm -f .tmppostinstallfile
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/original/extra/httpd-ssl.conf
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/original/extra/httpd-vhosts.conf
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/original/extra/httpd-multilang-errordoc.conf
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/original/extra/httpd-modjk.conf
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/original/extra/httpd-autoindex.conf
 
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/httpd.conf
@@ -115,6 +116,7 @@ rm -f .tmppostinstallfile
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/extra/httpd-ssl.conf
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/extra/httpd-vhosts.conf
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/extra/httpd-multilang-errordoc.conf
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/extra/httpd-modjk.conf
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./conf/extra/httpd-autoindex.conf
 	
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./include/ap_config_auto.h
