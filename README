@@ -1,3 +1,7 @@
+Requirement 
+OS : RHEL6, CENTOS6 
+
+
 1. Included Packages
  - httpd-2.4.25 
  - apr-1.5.2
