@@ -1,3 +1,13 @@
+## 1.2 Release Note
+CWS is open source project based on apache httpd web server same as ews serise. 
+
+Feature  
+- Easy install with installation script
+- Embedded Pcre-8.39 for apache 
+- Preinstall apache tomcat connector(mod_jk 1.2.42)
+- Preinstall almost apache module 
+- It can build 3rd party's apache extension module with apxs  
+
 ## Requirement 
 OS : RedHat Enterprise Linux6, CentOS6  
 SELINUX : disable 
@@ -20,16 +30,6 @@ SELINUX : disable
 
 ## Document Root
  - ${INSTALL_PATH}/htdocs 
-
-## 1.2 Release Note
-CWS is open source project based on apache httpd web server same as ews serise. 
-
-Feature  
-- Easy install with installation script
-- Embedded Pcre-8.39 for apache 
-- Preinstall apache tomcat connector(mod_jk 1.2.42)
-- Preinstall almost apache module 
-- It can build 3rd party's apache extension module with apxs 
 
 ## REFERENCE
 http://httpd.apache.org/docs/2.4/
