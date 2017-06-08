@@ -78,7 +78,8 @@ _startinstall()
     echo -e "\e[32m -- Start install main configure\e[0m" 
     #cp ${currentDir}/conf/original/httpd.conf.dist ${currentDir}/conf/httpd.conf 
 
-    sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" -e "s: modules/: ${currentDir}/modules/:g"   conf/httpd.conf
+    #sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" -e "s: modules/: ${currentDir}/modules/:g"   conf/httpd.conf
+    sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" conf/httpd.conf
 cat > .tmppostinstallfile << EOF
     # the option for httpd command
 OPTIONS=" -f ${currentDir}/conf/httpd.conf -E ${currentDir}/logs/httpd.log" 
@@ -87,11 +88,11 @@ export LD_LIBRARY_PATH=${currentDir}/lib:${currentDir}/pcre/lib
 export PATH=${PATH}:${currentDir}/pcre/bin
 EOF
 
-mv ${currentDir}/sbin/apachectl ${currentDir}/sbin/apachectl.cwssave
-cp ${currentDir}/sbin/apachectl.dist ${currentDir}/sbin/apachectl 
-chmod 700 ${currentDir}/sbin/apachectl
-sed -i -e "s:HTTPD='./httpd':HTTPD='${currentDir}/sbin/httpd':g" -e "/HTTPD=/r .tmppostinstallfile" sbin/apachectl
-rm -f .tmppostinstallfile  
+	mv ${currentDir}/sbin/apachectl ${currentDir}/sbin/apachectl.cwssave
+	cp ${currentDir}/sbin/apachectl.dist ${currentDir}/sbin/apachectl 
+	#chmod 700 ${currentDir}/sbin/apachectl
+	#sed -i -e "s:HTTPD='./httpd':HTTPD='${currentDir}/sbin/httpd':g" -e "/HTTPD=/r .tmppostinstallfile" sbin/apachectl
+	#rm -f .tmppostinstallfile  
 
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/apr-1-config
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/apu-1-config
@@ -141,11 +142,9 @@ rm -f .tmppostinstallfile
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./sbin/envvars
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./sbin/envvars-std
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./sbin/apachectl
-
-	
-	
-	
-
+	sed -i -e "s:HTTPD='./httpd':HTTPD='${currentDir}/sbin/httpd':g" -e "/HTTPD=/r .tmppostinstallfile" sbin/apachectl
+	rm -f .tmppostinstallfile  
+	chmod 700 ${currentDir}/sbin/apachectl
 } 
 
 _makesymlink() 
