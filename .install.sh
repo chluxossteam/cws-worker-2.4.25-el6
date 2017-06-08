@@ -79,7 +79,7 @@ _startinstall()
     #cp ${currentDir}/conf/original/httpd.conf.dist ${currentDir}/conf/httpd.conf 
 
     #sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" -e "s: modules/: ${currentDir}/modules/:g"   conf/httpd.conf
-    sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" conf/httpd.conf
+    #sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" conf/httpd.conf
 cat > .tmppostinstallfile << EOF
     # the option for httpd command
 OPTIONS=" -f ${currentDir}/conf/httpd.conf -E ${currentDir}/logs/httpd.log" 
@@ -145,6 +145,7 @@ EOF
 	sed -i -e "s:HTTPD='./httpd':HTTPD='${currentDir}/sbin/httpd':g" -e "/HTTPD=/r .tmppostinstallfile" sbin/apachectl
 	rm -f .tmppostinstallfile  
 	chmod 700 ${currentDir}/sbin/apachectl
+    sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" -e "s: modules/: ${currentDir}/modules/:g"   conf/httpd.conf
 } 
 
 _makesymlink() 
