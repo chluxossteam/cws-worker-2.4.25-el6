@@ -11,10 +11,10 @@ _front()
     eval printf %.0s\# '{1..'${COLUMNS:-$(tput cols)}'}'; echo    
     echo -e "" 
     printf "%*s\n" $(((${#TITLE}+$(tput cols))/2)) "$TITLE"
-    echo -e "\t Version : 1.2 (CWS-WORKER-2.4.25" 
+    echo -e "\t Version : 1.2c (CWS-WORKER-2.4.25" 
     echo -e "\t Author  : Chlux Co,Ltd."
     echo -e "\t Release : 01. Jun. 2017" 
-    echo -e "\t Package : PCRE-0.8, APACHE-HTTPD-2.4.25, APR-1.5.2, APR-UTIL-1.5.4 , JK-1.2.42" 
+    echo -e "\t Package : pcre-0.8, apache-httpd-2.4.25, apr-1.5.2, apr-util-1.5.4 , mod_jk-1.2.42" 
     echo -e "\t Requirement : Root Permission (Installation)"
     echo -e "\t             : Root Permission (Running)" 
     echo -e ""
