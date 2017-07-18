@@ -1,0 +1,35 @@
+#!/bin/sh 
+
+MOD=('mod_proxy.so'
+     'mod_proxy_http.so'
+     'mod_proxy_connect.so' 
+     'mod_proxy_ajp.so'
+     'mod_proxy_balancer.so'
+     'mod_proxy_express.so'
+     'mod_session_cookie.so'
+     'mod_session.so'
+     'mod_slotmem_shm.so'
+     'mod_lbmethod_byrequests.so'
+     'mod_lbmethod_bytraffic.so'
+     'mod_lbmethod_bybusyness.so'
+     'mod_lbmethod_heartbeat.so'
+     'mod_proxy_fcgi.so'
+     'mod_proxy_fdpass.so'
+     'mod_proxy_wstunnel.so')
+
+
+HTTPD_HOME='/opt/cws-worker-2.4.25/'
+CONF=${HTTPD_HOME}'conf/httpd.conf'
+SRC='Include conf/extra/httpd-proxy.conf'
+
+for n in ${MOD[@]}; do 
+	sed -i "/${n}/s/^/#/g" ${CONF}
+done  
+
+
+sed -e "s:${SRC}:#${SRC}:g" -i ${CONF}
+
+echo ""
+echo "Disabled mod_proxy" 
+echo ""
+#echo ""

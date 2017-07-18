@@ -1,14 +1,14 @@
 #!/bin/bash 
 
 
+HTTPD_HOME='/opt/cws-worker-2.4.25/'
+CONF=${HTTPD_HOME}'conf/httpd.conf'
 SRC='Include conf/extra/httpd-modjk.conf'
 
 ##echo ${SRC}
-sed -e "s:${SRC}:#${SRC}:g" -i ../conf/httpd.conf 
+sed -e "s:${SRC}:#${SRC}:g" -i ${CONF}
 
 echo""
 echo "Disabled modjk"
-echo""
-echo "You should apache start (../sbin/apachectl stop | start) for apply this"
 echo""
 

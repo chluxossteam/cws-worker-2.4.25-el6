@@ -1,13 +1,10 @@
 #!/bin/bash 
+HTTPD_HOME='/opt/cws-worker-2.4.25/'
+CONF=${HTTPD_HOME}'/conf/httpd.conf'
+SRC='Include conf/extra/httpd-mpm.conf' 
 
-
-SRC='Include conf/extra/httpd-mpm.conf'
-
-##echo ${SRC}
-sed -e "s:${SRC}:#${SRC}:g" -i ../conf/httpd.conf 
+sed -e "s:${SRC}:#${SRC}:g" -i ${CONF}
 
 echo "Disabled mpm"
 echo "Apache will run as default mpm"
-echo ""
-echo "You should apache start (../sbin/apachectl stop | start) for apply this"
 echo ""
