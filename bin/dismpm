@@ -5,6 +5,6 @@ SRC='Include conf/extra/httpd-mpm.conf'
 
 sed -e "s:${SRC}:#${SRC}:g" -i ${CONF}
 
+echo ""
 echo "Disabled mpm"
-echo "Apache will run as default mpm"
 echo ""
