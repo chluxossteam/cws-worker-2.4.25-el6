@@ -1,0 +1,13 @@
+#!/bin/bash 
+
+
+SRC='Include conf/extra/httpd-mpm.conf'
+
+##echo ${SRC}
+sed -e "s:${SRC}:#${SRC}:g" -i ../conf/httpd.conf 
+
+echo "Disabled mpm"
+echo "Apache will run as default mpm"
+echo ""
+echo "You should apache start (../sbin/apachectl stop | start) for apply this"
+echo ""

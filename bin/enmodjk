@@ -1,0 +1,46 @@
+#!/bin/bash 
+
+
+SRC='Include conf/extra/httpd-modjk.conf'
+URIP='../conf/modjk/uri.properties'
+WORKP='../conf/modjk/workers.properties'
+sed -e "s:#${SRC}:${SRC}:g" -i ../conf/httpd.conf 
+echo ""
+echo "Enabled mod_jk" 
+echo "please check below files"
+echo "  1. ${URIP}"
+echo "  2. ${WORKP}"
+
+echo ""
+echo -e -n "Would you like edit uri.properties?[Y/n] "
+read ANS
+
+case ${ANS} in
+    [yY])
+		/bin/vi ${URIP}
+		;;
+	[nN])  ;;
+	*)
+		/bin/vi ${URIP}
+		;;
+esac
+
+
+echo ""
+echo -e -n "Would you like edit workers.properties?[Y/n] "
+read ANS
+
+case ${ANS} in
+    [yY])
+		/bin/vi ${WORKP}
+		;;
+	[nN])  ;;
+	*) 
+		/bin/vi ${WORKP}
+		;;
+esac 
+
+
+echo ""
+echo "You should apache start (../sbin/apachectl stop | start) for apply this"
+echo ""

@@ -1,0 +1,14 @@
+#!/bin/bash 
+
+
+SRC='Include conf/extra/httpd-modjk.conf'
+
+##echo ${SRC}
+sed -e "s:${SRC}:#${SRC}:g" -i ../conf/httpd.conf 
+
+echo""
+echo "Disabled modjk"
+echo""
+echo "You should apache start (../sbin/apachectl stop | start) for apply this"
+echo""
+
