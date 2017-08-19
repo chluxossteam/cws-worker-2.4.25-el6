@@ -1,11 +1,11 @@
 #!/bin/bash 
 
 
-HTTPD_HOME='/opt/cws-worker-2.4.25/'
+HTTPD_HOME='/opt/cws_el6/'
 CONF=${HTTPD_HOME}'conf/httpd.conf'
 SRC='Include conf/extra/httpd-modjk.conf'
 URIP=${HTTPD_HOME}'conf/modjk/uri.properties'
-WORKP=${HTTP_HOME}'conf/modjk/workers.properties' 
+WORKP=${HTTPD_HOME}'conf/modjk/workers.properties' 
 
 sed -e "s:#${SRC}:${SRC}:g" -i ${CONF}
 echo ""
