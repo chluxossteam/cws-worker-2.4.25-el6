@@ -22,7 +22,7 @@ SELINUX : disable
 ## Installation 
  - Download cws-worker-2.4.25 or clone from git
  - Decompress cws-worker-2.4.25.zip to target directory
- - execute .install.sh (hidden file by . (dot) 
+ - execute "shell> install.sh 
  - choose log directory (enter the path/directory name for log storage) 
  - enter the name of apache user / group
  - execute ${INSTALLED_CWS}/sbin/apachectl start
