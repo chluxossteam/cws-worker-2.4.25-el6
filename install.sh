@@ -9,30 +9,32 @@ _front()
     TITLE="CHLUX APACHE INSTALLER"
     clear
     eval printf %.0s\# '{1..'${COLUMNS:-$(tput cols)}'}'; echo    
-    echo -e "" 
+    echo "" 
     printf "%*s\n" $(((${#TITLE}+$(tput cols))/2)) "$TITLE"
-    echo -e "\t Version : 1.2c (CWS-WORKER-2.4.25" 
-    echo -e "\t Author  : Chlux Co,Ltd."
-    echo -e "\t Release : 01. Jun. 2017" 
-    echo -e "\t Package : pcre-0.8, apache-httpd-2.4.25, apr-1.5.2, apr-util-1.5.4 , mod_jk-1.2.42" 
-    echo -e "\t Requirement : Root Permission (Installation)"
-    echo -e "\t             : Root Permission (Running)" 
-    echo -e ""
+    echo  " Version : 1.2c (CWS-WORKER-2.4.25" 
+    echo  " Author  : Chlux Co,Ltd."
+    echo  " Release : 01. Jun. 2017" 
+    echo  " Package : pcre-0.8, apache-httpd-2.4.25, apr-1.5.2, apr-util-1.5.4 , mod_jk-1.2.42" 
+    echo  " Requirement : Root Permission (Installation)"
+    echo  "             : Root Permission (Running)" 
+    echo  ""
     eval printf %.0s\# '{1..'${COLUMNS:-$(tput cols)}'}'; echo  
 
 }
 
 _footer()
 { 
-    eval printf %.0s\# '{1..'${COLUMNS:-$(tput cols)}'}'; echo     
-    echo -e " Apache Directory : $1"
-    echo -e " Apache User      : $2" 
-    echo -e " Apache Group     : $3" 
-    echo -e " Apache Script    : " `ls -l /etc/init.d/httpd`
+    eval printf %.0s\# '{1..'${COLUMNS:-$(tput cols)}'}'; echo      
+    echo " Install Result " 
+    echo " Apache Directory : $1"
+    echo " Apache User      : $2" 
+    echo " Apache Group     : $3" 
+    echo " Apache Script    : " `ls -l /etc/init.d/httpd`
     eval printf %.0s\# '{1..'${COLUMNS:-$(tput cols)}'}'; echo    
-}
+} 
+
 FQDN=`hostname`
-if [ "x${FQDN}" = "x" ]; then
+if [ "${FQDN}" = "x" ]; then
         FQDN=localhost.localdomain
 fi
 
@@ -40,11 +42,12 @@ fi
 ## CALL basic information for this script
 _checkuser()
 {
-    # Setup User / group for Apache
-    echo -e -n "apache user (default : \e[2m${APACHE_USER}\e[22m):" 
+    # Setup User / group for Apache 
+    echo "  2. Check user for web server " 
+    echo -n "  - Webserver user (default : ${APACHE_USER}):" 
     read APACHE_USER 
     APACHE_GROUP=${APACHE_USER}
-    echo -e -n "apache group (default : \e[2m${APACHE_GROUP}\e[22m):"
+    echo -n "  - Webserver group (default : ${APACHE_GROUP}):"
     read APACHE_GROUP
 
     if [ -z ${APACHE_USER}  ]; then 
@@ -61,7 +64,7 @@ _checkuser()
     #echo ${ret}
 
     if ${ret}; then 
-        echo -e "\e[33m\e[1m -- Entered UID/GID (${APACHE_USER}/${APACHE_GROUP}) is already exists, Will use this UID.\e[0m"
+        echo "  - UID/GID (${APACHE_USER}/${APACHE_GROUP}) is already exists, Will use this UID."
     else  
         #groupadd ${APACHE_GROUP} > /dev/null 2&>1  
         if [ ! $(getent group ${APACHE_GROUP}) ]; then  
@@ -69,13 +72,13 @@ _checkuser()
         fi
         GROUP_SW="-g ${APACHE_GROUP}"
         useradd ${GROUP_SW} -M -r -d ${currentDir} ${APACHE_USER} -s /sbin/nologin > /dev/null 
-        echo -e "\e[32m --Create USER/GROUP for Apache (${APACHE_USER}/${APACHE_GROUP})\e[0m"
+        echo "  - Create USER/GROUP for Apache (${APACHE_USER}/${APACHE_GROUP})"
     fi
 }
 
 _startinstall()
 {
-    echo -e "\e[32m -- Start install main configure\e[0m" 
+    echo "  3. Start install"
     #cp ${currentDir}/conf/original/httpd.conf.dist ${currentDir}/conf/httpd.conf 
 
     #sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" -e "s: modules/: ${currentDir}/modules/:g"   conf/httpd.conf
@@ -145,6 +148,12 @@ EOF
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./pcre/lib/pkgconfig/libpcreposix.pc
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./pcre/bin/pcre-config 
 	
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/enmpm
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/dismpm
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/enmodjk
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/dismodjk
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/enproxy
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/disproxy
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./sbin/envvars
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./sbin/envvars-std
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./sbin/apachectl
@@ -152,25 +161,27 @@ EOF
 	rm -f .tmppostinstallfile  
 	chmod 700 ${currentDir}/sbin/apachectl
     sed -i -e "s:User daemon:User ${APACHE_USER}:g" -e "s:Group daemon:Group ${APACHE_GROUP}:g" -e "s: modules/: ${currentDir}/modules/:g"   conf/httpd.conf
+	
+	_makeExtra
 } 
 
 _makesymlink() 
 {
-    echo -e "\e[32m -- Create /etc/init.d/httpd script from ${currentDir}/sbin/apachectl\e[0m" 
-    if [ -x '/etc/init.d/httpd.old' ]; then 
-        rm -rf /etc/init.d/httpd.old
+    echo "  4. Registering webserver service file (/etc/init.d/httpd)" 
+    if [ -x '/etc/init.d/httpd.cwasbackup' ]; then 
+        rm -rf /etc/init.d/httpd.cwasbackup
     fi
     if [ -x '/etc/init.d/httpd' ]; then
-        echo -e "\e[32m -- Backup /etc/init.d/httpd to /etc/init.d/httpd.old\e[0m"
-	mv /etc/init.d/httpd /etc/init.d/httpd.old
+        echo "  - Backup /etc/init.d/httpd to /etc/init.d/httpd.cwasbackup"
+	mv /etc/init.d/httpd /etc/init.d/httpd.cwasbackup
     fi 
     ln -s ${currentDir}/sbin/apachectl /etc/init.d/httpd
 }
 
 _changePermission()
 { 
-    
-    echo -e "\e[32m -- Change ${currentDir} Ownership to ${APACHE_USER}\/${APACHE_GOURP}\e[0m"
+    echo "  5. Change to onwership"
+    echo "  - Change ownership of ${currentDir} to ${APACHE_USER}\/${APACHE_GROUP}"
     chown -R ${APACHE_USER}:${APACHE_GROUP} $currentDir
     find ${currentDir}/htdocs -type d -exec chmod g+rx {} +
     find ${currentDir}/htdocs -type f -exec chmod g+r {} + 
@@ -179,60 +190,63 @@ _changePermission()
 	#
  	# 
     chmod -R o-rwx ${currentDir}/htdocs/ 
-    echo -e "\e[32m -- Finish installation\e[0m"  
+    echo "  -------------------------"
+    echo "  -- Finish installation --"  
+    echo "  -------------------------"
 }
 
 _makeExtra()
 {
-    echo -e "\e[32m -- Start install extra configure \e[0m" 
     #cp ${currentDir}/conf/extra.dist/*.conf ${currentDir}/conf/extra/
 
     sed -i -e "s:/var:${currentDir}:g" conf/extra/*.conf
 }
 
 _makeLogs()
-{   
-	curLogDir=${currentDir}"/logs"
-	LOGDIR=${currentDir}"/logs" 
-	if [ -d ${curLogDir} ]; then 
-		echo "Please delete or unlink current log directory : ${curLogDir}"
-		exit
-	fi
-    echo -e "\e[32m -- Setup log dir\e[0m"
-    echo -e -n "Log directory path : (default : \e[2m${curLogDir}\e[22m):"  
-	read NEWPATH
+{ 
+    echo "  1. Setup log directory" 
+    echo "  -------------------------------"
+    curLogDir=${currentDir}"/logs"
+    LOGDIR=${currentDir}"/logs" 
+    if [ -d ${curLogDir} ]; then 
+        echo "Please delete or unlink current log directory : ${curLogDir}"
+        exit
+    fi
+    #echo "  -- Setup log dir\e[0m"
+    echo -n "   Log directory path : (default : ${curLogDir}):"  
+    read NEWPATH
 
-	if [ ${NEWPATH} ]; then   
-		if [ ${curLogDir} != ${NEWPATH} ]; then     
-			echo "Create log directory (${NEWPATH})"
-			mkdir -p ${NEWPATH}	 
-			ln -s ${NEWPATH} logs  
-			LOGDIR=${NEWPATH}
-		else 
-			echo "finish"	
-		fi  
-	else 
-		mkdir -p ${curLogDir} 
-		LOGDIR=${curLogDir}
-	fi  
+    if [ ${NEWPATH} ]; then   
+        if [ ${curLogDir} != ${NEWPATH} ]; then     
+            echo "Create log directory (${NEWPATH})"
+            mkdir -p ${NEWPATH}	 
+            ln -s ${NEWPATH} logs  
+            LOGDIR=${NEWPATH}
+        else 
+            echo " Exit installation"	
+        fi  
+    else 
+        mkdir -p ${curLogDir} 
+        LOGDIR=${curLogDir}
+    fi  
 } 
 _checkenv() 
 {    
-    echo "Owner     : "${APACHE_USER} 
+    echo "  Owner     : "${APACHE_USER} 
     echo "Owner     : "${APACHE_USER} >> install.log 
-	echo "Group     : "${APACHE_GROUP} 
+	echo "  Group     : "${APACHE_GROUP} 
 	echo "Group     : "${APACHE_GROUP}  >> install.log 
-    echo "Log Path  : "${LOGDIR}
+    echo "  Log Path  : "${LOGDIR}
     echo "Log Path  : "${LOGDIR} >> install.log
-    echo "Glibc     : "`rpm -qa | grep glibc` 
+    echo "  Glibc     : "`rpm -qa | grep glibc` 
     echo "Glibc     : "`rpm -qa | grep glibc`  >> install.log
- 	echo "Apache    : "`${currentDir}/sbin/apachectl -v`
+ 	echo "  Apache    : "`${currentDir}/sbin/apachectl -v`
  	echo "Apache    : "`${currentDir}/sbin/apachectl -v` >> install.log
-    echo "APR       : "`${currentDir}/bin/apr-1-config --version` 
+    echo "  APR       : "`${currentDir}/bin/apr-1-config --version` 
     echo "APR       : "`${currentDir}/bin/apr-1-config --version` >> install.log
-    echo "APR Util  : "`${currentDir}/bin/apu-1-config --version` 
+    echo "  APR Util  : "`${currentDir}/bin/apu-1-config --version` 
     echo "APR Util  : "`${currentDir}/bin/apu-1-config --version` >> install.log 
-	echo "PCRE      : "`${currentDir}/pcre/bin/pcre-config --version`
+	echo "  PCRE      : "`${currentDir}/pcre/bin/pcre-config --version`
 	echo "PCRE      : "`${currentDir}/pcre/bin/pcre-config --version` >> install.log
 } 
 _createLdPath()
@@ -245,7 +259,7 @@ _front
 _makeLogs
 _checkuser 
 _startinstall 
-_makeExtra 
+#_makeExtra 
 _makesymlink 
 _changePermission  
 _createLdPath
