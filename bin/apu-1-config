@@ -27,16 +27,16 @@ bindir="/opt/cws-worker-2.4.25/bin"
 libdir="${prefix}/lib"
 includedir="/opt/cws-worker-2.4.25/include"
 
-LIBS="/tmp/httpd-2.4.25/srclib/apr-util/xml/expat/libexpat.la"
-INCLUDES="-I/tmp/httpd-2.4.25/srclib/apr-util/xml/expat/lib"
+LIBS="/opt/cws-worker-2.4.25/lib/libexpat.la"
+INCLUDES="-I/opt/cws-worker-2.4.25/lib"
 LDFLAGS=""
 LDAP_LIBS=""
 DBM_LIBS="  "
 
 APRUTIL_LIBNAME="aprutil-${APRUTIL_MAJOR_VERSION}"
 
-APU_SOURCE_DIR="/tmp/httpd-2.4.25/srclib/apr-util"
-APU_BUILD_DIR="/tmp/httpd-2.4.25/srclib/apr-util"
+APU_SOURCE_DIR="/opt/cws-worker-2.4.25"
+APU_BUILD_DIR="/opt/cws-worker-2.4.25"
 APR_XML_EXPAT_OLD="@APR_XML_EXPAT_OLD@"
 APU_DB_VERSION="0"
 
