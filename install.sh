@@ -94,6 +94,12 @@ EOF
 	#sed -i -e "s:HTTPD='./httpd':HTTPD='${currentDir}/sbin/httpd':g" -e "/HTTPD=/r .tmppostinstallfile" sbin/apachectl
 	#rm -f .tmppostinstallfile  
 
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/disproxy
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/dismpm
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/dismodjk
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/enproxy
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/enmpm
+	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/enmodjk
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/apr-1-config
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/apu-1-config
 	sed -i -e "s:/opt/cws-worker-2.4.25:${currentDir}:g" ./bin/apxs
@@ -228,6 +234,12 @@ _checkenv()
     echo "APR Util  : "`${currentDir}/bin/apu-1-config --version` >> install.log 
 	echo "PCRE      : "`${currentDir}/pcre/bin/pcre-config --version`
 	echo "PCRE      : "`${currentDir}/pcre/bin/pcre-config --version` >> install.log
+} 
+_createLdPath()
+{ 
+	echo "${currentDir}/lib" > /etc/ld.so.conf.d/cws-apache.conf
+	echo "${currentDir}/prec/lib" >> /etc/ld.so.conf.d/cws-apache.conf 
+	ldconfig
 }
 _front 
 _makeLogs
@@ -235,5 +247,6 @@ _checkuser
 _startinstall 
 _makeExtra 
 _makesymlink 
-_changePermission 
+_changePermission  
+_createLdPath
 _checkenv
